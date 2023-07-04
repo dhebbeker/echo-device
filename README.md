@@ -1,5 +1,6 @@
-# Embedded-Software-Base
-Base for embedded software.
+# Echo Device
+
+Simple device which answers with the message which has been received.
 
 ## System requirements
 
