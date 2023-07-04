@@ -22,7 +22,6 @@
 
 String inputString = "";     // a String to hold incoming data
 bool stringComplete = false; // whether the string is complete
-static char endOfLine = '\n';
 
 void setup() {
   // initialize serial:
@@ -34,7 +33,7 @@ void setup() {
 void loop() {
   // print the string when a newline arrives:
   if (stringComplete) {
-    Serial.print("Echo: \t'" + inputString + "'" + endOfLine);
+    Serial.println("Echo: \t'" + inputString + "'");
     // clear the string:
     inputString = "";
     stringComplete = false;
@@ -57,7 +56,6 @@ void serialEvent() {
       // if the incoming character is a newline, set a flag so the main loop can
       // do something about it:
       if (inChar == '\n' || inChar == '\r') {
-        endOfLine = inChar;
         stringComplete = true;
       }
     }
