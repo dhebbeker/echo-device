@@ -33,6 +33,7 @@ void setup() {
 void loop() {
   // print the string when a newline arrives:
   if (stringComplete) {
+    inputString.trim();
     Serial.println("Echo: \t'" + inputString + "'");
     // clear the string:
     inputString = "";
