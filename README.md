@@ -1,6 +1,10 @@
 # Embedded-Software-Base
 Base for embedded software.
 
+## System requirements
+
+The software is configured to run on the development board [ESP32-S3-DevKitC-1 v1.1](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html#esp32-s3-devkitc-1-v1-1).
+
 ## Deployment
 
 ### Generate the documentation
@@ -41,3 +45,19 @@ The project configuration for the simulator is provided as [`wokwi.toml`](wokwi_
 Note, that you must build the software (using the default build configuration) before it can be simulated.
 
 Please refer to the documentation of the simulator for instructions on how to simulate the device.
+
+## User manual
+
+1. Build and upload the software.
+2. Physically [connect](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/get-started/establish-serial-connection.html#usb-to-uart-bridge-on-development-board) the UART port of the development board to the personal computer (does not apply to the simulation).
+   Installing drivers may be necessary.
+3. Open a serial terminal using the following settings:
+   - Baud rate: `9600`
+   - Data bits: `8`
+   - Stop bits: `1`
+   - Parity: none
+4. Type and send a line.
+5. The device will answer
+   ```
+   Echo:    '<your message>'
+   ```
