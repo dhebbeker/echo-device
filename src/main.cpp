@@ -22,6 +22,7 @@
 
 String inputString = "";     // a String to hold incoming data
 bool stringComplete = false; // whether the string is complete
+static char endOfLine = '\n';
 
 void setup() {
   // initialize serial:
@@ -33,9 +34,7 @@ void setup() {
 void loop() {
   // print the string when a newline arrives:
   if (stringComplete) {
-    Serial.print("Echo: \t'");
-    Serial.print(inputString);
-    Serial.println("'");
+    Serial.print("Echo: \t'" + inputString + "'" + endOfLine);
     // clear the string:
     inputString = "";
     stringComplete = false;
@@ -48,15 +47,19 @@ void loop() {
   delay response. Multiple bytes of data may be available.
 */
 void serialEvent() {
-  while (Serial.available()) {
-    // get the new byte:
-    char inChar = (char)Serial.read();
-    // add it to the inputString:
-    inputString += inChar;
-    // if the incoming character is a newline, set a flag so the main loop can
-    // do something about it:
-    if (inChar == '\n' || inChar == '\r') {
-      stringComplete = true;
+  while (Serial.available() > 0) {
+    const auto inData = Serial.read();
+    if (inData < 0) {
+      break;
+    } else {
+      const auto inChar = static_cast<char>(inData);
+      inputString += inChar;
+      // if the incoming character is a newline, set a flag so the main loop can
+      // do something about it:
+      if (inChar == '\n' || inChar == '\r') {
+        endOfLine = inChar;
+        stringComplete = true;
+      }
     }
   }
 }
