@@ -1,0 +1,15 @@
+# Difference with default Doxyfile 1.9.6 (4586b5cfaa3d46d51f6a51882951d15644c49edf)
+OUTPUT_DIRECTORY       = doc
+JAVADOC_AUTOBRIEF      = YES
+EXTRACT_ALL            = YES
+INPUT                  = .
+RECURSIVE              = YES
+IMAGE_PATH             = doc/
+USE_MDFILE_AS_MAINPAGE = ./README.md
+HTML_FILE_EXTENSION    = .xhtml
+HTML_TIMESTAMP         = YES
+USE_MATHJAX            = YES
+HAVE_DOT               = YES
+UML_LOOK               = YES
+DIR_GRAPH_MAX_DEPTH    = 2
+DOT_IMAGE_FORMAT       = svg
