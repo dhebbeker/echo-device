@@ -20,24 +20,23 @@
   https://www.arduino.cc/en/Tutorial/BuiltInExamples/SerialEvent
 */
 
-String inputString = "";     // a String to hold incoming data
-bool stringComplete = false; // whether the string is complete
+char receivedChar;
+bool isBufferFull = false; // whether the string is complete
 
 void setup() {
   // initialize serial:
   Serial.begin(9600);
-  // reserve 200 bytes for the inputString:
-  inputString.reserve(200);
 }
 
 void loop() {
   // print the string when a newline arrives:
-  if (stringComplete) {
-    inputString.trim();
-    Serial.println("Echo: \t'" + inputString + "'");
-    // clear the string:
-    inputString = "";
-    stringComplete = false;
+  if (isBufferFull) {
+    Serial.printf("Received: \t%#04X", receivedChar);
+    if (receivedChar > 31) {
+      Serial.printf(" '%c'", receivedChar);
+    }
+    Serial.println();
+    isBufferFull = false;
   }
 }
 
@@ -47,18 +46,11 @@ void loop() {
   delay response. Multiple bytes of data may be available.
 */
 void serialEvent() {
-  while (Serial.available() > 0) {
-    const auto inData = Serial.read();
-    if (inData < 0) {
-      break;
-    } else {
-      const auto inChar = static_cast<char>(inData);
-      inputString += inChar;
-      // if the incoming character is a newline, set a flag so the main loop can
-      // do something about it:
-      if (inChar == '\n' || inChar == '\r') {
-        stringComplete = true;
-      }
-    }
+  const auto inData = Serial.read();
+  if (inData < 0 || isBufferFull) {
+    return;
+  } else {
+    receivedChar = static_cast<char>(inData);
+    isBufferFull = true;
   }
 }
